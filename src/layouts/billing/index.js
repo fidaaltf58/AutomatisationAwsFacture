@@ -77,120 +77,128 @@ function Billing() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <SoftBox mt={4}>
-        <SoftBox mb={1.5}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} lg={7}>
-              <SoftBox>
-                <SoftTypography variant="h4">Custom Your Billing Data Regroupement With Tags</SoftTypography>
-                <SoftBox>
-                  <div style={{ marginBottom: '20px' }}></div>
-                  <div style={{ display: 'flex', flexDirection: 'row', gap: '55px' }}>
-                    <label style={{ fontSize: '14px', marginBottom: '8px' }}>
-                      Start Date:
-                      <input
-                        type="date"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                        style={{
-                          padding: '8px',
-                          borderRadius: '4px',
-                          border: '1px solid #ced4da',
-                          backgroundColor: '#f8f9fa',
-                          boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)',
-                          width: '100%',
-                          boxSizing: 'border-box',
-                          /* Apply custom font and color to the date format */
-                          color: 'grey', // Change color
-                          fontFamily: 'Arial, sans-serif', // Change font family
-                        }}
-                      />
-                    </label>
-                    <label style={{ fontSize: '14px', marginBottom: '8px' }}>
-                      End Date:
-                      <input
-                        type="date"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                        style={{
-                          padding: '8px',
-                          borderRadius: '4px',
-                          border: '1px solid #ced4da',
-                          backgroundColor: '#f8f9fa',
-                          boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)',
-                          width: '100%',
-                          boxSizing: 'border-box',
-                          /* Apply custom font and color to the date format */
-                          color: 'grey', // Change color
-                          fontFamily: 'Arial, sans-serif', // Change font family
-                        }}
-                      />
-                    </label>
-                    <label style={{ fontSize: '14px', marginBottom: '8px' }}>
-                      Region:
-                      <input
-                        type="text"
-                        value={region}
-                        onChange={(e) => setRegion(e.target.value)}
-                        style={{
-                          padding: '8px',
-                          borderRadius: '4px',
-                          border: '1px solid #ced4da',
-                          backgroundColor: '#f8f9fa',
-                          boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)',
-                          width: '100%',
-                          boxSizing: 'border-box',
-                          /* Apply custom font and color to the date format */
-                          color: 'grey', // Change color
-                          fontFamily: 'Arial, sans-serif', // Change font family
-                        }}
-                      />
-                    </label>
-                  </div>
-                  <div style={{ marginBottom: "25px" }} />
-                  <select
+      <SoftBox py={3}>
+        <SoftBox mb={3}>
 
-                    value={selectedTag}
-                    onChange={handleTagChange}
-                    style={{
-                      padding: '8px',
-                      borderRadius: '4px',
-                      border: '1px solid #ced4da',
-                      backgroundColor: '#f8f9fa',
-                      boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)',
-                      width: '100%',
-                      boxSizing: 'border-box',
-                      /* Apply custom font and color to the date format */
-                      color: 'grey', // Change color
-                      fontFamily: 'Arial, sans-serif', // Change font family
-                    }}
-                  >
-                    <option value="">Select Tag</option>
-                    {tagOptions.map(tag => (
-                      <option key={tag} value={tag}>{tag}</option>
-                    ))}
-                  </select>
-                  <div style={{ display: 'flex', gap: '26px', alignItems: 'center' }}>
-                    <SoftButton onClick={handleFetchTables}>Click to Fetch Tables</SoftButton>
-                  </div>
+          <Card>
+
+            <SoftBox pt={2} px={2} display="flex" justifyContent="space-between" alignItems="center">
+              <SoftTypography variant="h4">Custom Your Billing Data Regroupement With Tags</SoftTypography>
+              <SoftBox>
+                <SoftBox
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    "& .MuiTableRow-root:not(:last-child)": {
+                      "& td": {
+                        borderBottom: ({ borders: { borderWidth, borderColor } }) =>
+                          `${borderWidth[1]} solid ${borderColor}`,
+                      },
+                    },
+                  }}
+                  p={4}
+                >
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', gap: '16px' }}>
+                      <label style={{ fontSize: '14px', marginBottom: '8px' }}>
+                        Start Date:
+                        <input
+                          type="date"
+                          value={startDate}
+                          onChange={(e) => setStartDate(e.target.value)}
+                          style={{
+                            padding: '8px',
+                            borderRadius: '4px',
+                            border: '1px solid #ced4da',
+                            backgroundColor: '#f8f9fa',
+                            boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)',
+                            width: '100%',
+                            boxSizing: 'border-box',
+                            /* Apply custom font and color to the date format */
+                            color: 'grey', // Change color
+                            fontFamily: 'Arial, sans-serif', // Change font family
+                          }}
+                        />
+                      </label>
+                      <label style={{ fontSize: '14px', marginBottom: '8px' }}>
+                        End Date:
+                        <input
+                          type="date"
+                          value={endDate}
+                          onChange={(e) => setEndDate(e.target.value)}
+                          style={{
+                            padding: '8px',
+                            borderRadius: '4px',
+                            border: '1px solid #ced4da',
+                            backgroundColor: '#f8f9fa',
+                            boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)',
+                            width: '100%',
+                            boxSizing: 'border-box',
+                            /* Apply custom font and color to the date format */
+                            color: 'grey', // Change color
+                            fontFamily: 'Arial, sans-serif', // Change font family
+                          }}
+                        />
+                      </label>
+                      <label style={{ fontSize: '14px', marginBottom: '8px' }}>
+                        Region:
+                        <input
+                          type="text"
+                          value={region}
+                          onChange={(e) => setRegion(e.target.value)}
+                          style={{
+                            padding: '8px',
+                            borderRadius: '4px',
+                            border: '1px solid #ced4da',
+                            backgroundColor: '#f8f9fa',
+                            boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)',
+                            width: '100%',
+                            boxSizing: 'border-box',
+                            /* Apply custom font and color to the date format */
+                            color: 'grey', // Change color
+                            fontFamily: 'Arial, sans-serif', // Change font family
+                          }}
+                        />
+                      </label>
+                    </div>
+
+                    <select
+
+                      value={selectedTag}
+                      onChange={handleTagChange}
+                      style={{
+                        padding: '8px',
+                        borderRadius: '4px',
+                        border: '1px solid #ced4da',
+                        backgroundColor: '#f8f9fa',
+                        boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)',
+                        width: '100%',
+                        boxSizing: 'border-box',
+                        color: 'grey',
+                        fontFamily: 'Arial, sans-serif', // Change font family
+                      }}
+                    >
+                      <option value="">Select Tag</option>
+                      {tagOptions.map(tag => (
+                        <option key={tag} value={tag}>{tag}</option>
+                      ))}
+                    </select>
+                    <div style={{ display: 'flex', gap: '26px', alignItems: 'center' }}>
+                      <SoftButton onClick={handleFetchTables}>Click to Fetch Tables</SoftButton>
+                    </div>
+                    </div>
                 </SoftBox>
               </SoftBox>
-            </Grid>
-            <Grid item xs={12} lg={5}>
-              <WorkWithTheRockets
-                title="Documentation"
-                paragraph="In AWS data billing regroupment, tags are key. They help organize resources enabling efficient cost tracking ."
-                link="https://vermeg.com"
-              />
 
-            </Grid>
-          </Grid>
+            </SoftBox>
+          </Card>
         </SoftBox>
 
 
         <SoftBox py={-2}>
           <SoftBox mb={3}>
-
+                      <Card>
             <SoftBox pt={2} px={2} display="flex" justifyContent="space-between" alignItems="center">
               <SoftTypography variant="h6" fontWeight="medium">
                 The Billing Data is going to be displayed Here !
@@ -268,9 +276,12 @@ function Billing() {
 
                 </Grid>
               </Grid>
+              
             </SoftBox>
+            </Card>
           </SoftBox>
         </SoftBox>
+        
       </SoftBox>
 
 

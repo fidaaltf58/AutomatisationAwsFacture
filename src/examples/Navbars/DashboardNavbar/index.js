@@ -1,49 +1,21 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState, useEffect } from "react";
-
-// react-router components
+import { useState, useEffect, useRef } from "react";
 import { useLocation, Link } from "react-router-dom";
-
-// prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
 
-// @material-ui core components
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
-import Icon from "@mui/material/Icon";
 
-// Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftInput from "components/SoftInput";
 
-// Soft UI Dashboard React examples
 import Breadcrumbs from "examples/Breadcrumbs";
-import NotificationItem from "examples/Items/NotificationItem";
 
-// Custom styles for DashboardNavbar
 import {
   navbar,
   navbarContainer,
   navbarRow,
-  navbarIconButton,
-  navbarMobileMenu,
 } from "examples/Navbars/DashboardNavbar/styles";
 
 // Soft UI Dashboard React context
@@ -54,9 +26,8 @@ import {
   setOpenConfigurator,
 } from "context";
 
-// Images
-import team2 from "assets/images/team-2.jpg";
-import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
+// Importing the mark.js library
+import Mark from 'mark.js';
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -64,6 +35,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+  const markInstanceRef = useRef(null);
 
   useEffect(() => {
     // Setting the navbar type
@@ -91,9 +63,19 @@ function DashboardNavbar({ absolute, light, isMini }) {
     return () => window.removeEventListener("scroll", handleTransparentNavbar);
   }, [dispatch, fixedNavbar]);
 
-  const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
-  const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
+  useEffect(() => {
+    // Initialize the Mark.js instance
+    markInstanceRef.current = new Mark(document.body);
+
+    // Cleanup on component unmount
+    return () => {
+      if (markInstanceRef.current) {
+        markInstanceRef.current.unmark();
+      }
+    };
+  }, []);
+
+
   const handleCloseMenu = () => setOpenMenu(false);
 
   // Render the notifications menu
@@ -109,31 +91,23 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
-      <NotificationItem
-        image={<img src={team2} alt="person" />}
-        title={["New message", "from Laur"]}
-        date="13 minutes ago"
-        onClick={handleCloseMenu}
-      />
-      <NotificationItem
-        image={<img src={logoSpotify} alt="person" />}
-        title={["New album", "by Travis Scott"]}
-        date="1 day"
-        onClick={handleCloseMenu}
-      />
-      <NotificationItem
-        color="secondary"
-        image={
-          <Icon fontSize="small" sx={{ color: ({ palette: { white } }) => white.main }}>
-            payment
-          </Icon>
-        }
-        title={["", "Payment successfully completed"]}
-        date="2 days"
-        onClick={handleCloseMenu}
-      />
+      {/* Menu items go here */}
     </Menu>
   );
+
+  const handleSearch = (event) => {
+    const query = event.target.value;
+
+    if (markInstanceRef.current) {
+      markInstanceRef.current.unmark({
+        done: () => {
+          if (query) {
+            markInstanceRef.current.mark(query);
+          }
+        },
+      });
+    }
+  };
 
   return (
     <AppBar
@@ -151,56 +125,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
               <SoftInput
                 placeholder="Type here..."
                 icon={{ component: "search", direction: "left" }}
+                onChange={handleSearch}
               />
             </SoftBox>
             <SoftBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in">
-                <IconButton sx={navbarIconButton} size="small">
-                  <Icon
-                    sx={({ palette: { dark, white } }) => ({
-                      color: light ? white.main : dark.main,
-                    })}
-                  >
-                    account_circle
-                  </Icon>
-                  <SoftTypography
-                    variant="button"
-                    fontWeight="medium"
-                    color={light ? "white" : "dark"}
-                  >
-                    Sign in
-                  </SoftTypography>
-                </IconButton>
+              <Link to="/some-link">
+                <img src="src\examples\Navbars\DashboardNavbar\VER" style={{ height: '30px' }} />
               </Link>
-              <IconButton
-                size="small"
-                color="inherit"
-                sx={navbarMobileMenu}
-                onClick={handleMiniSidenav}
-              >
-                <Icon className={light ? "text-white" : "text-dark"}>
-                  {miniSidenav ? "menu_open" : "menu"}
-                </Icon>
-              </IconButton>
-              <IconButton
-                size="small"
-                color="inherit"
-                sx={navbarIconButton}
-                onClick={handleConfiguratorOpen}
-              >
-                <Icon>settings</Icon>
-              </IconButton>
-              <IconButton
-                size="small"
-                color="inherit"
-                sx={navbarIconButton}
-                aria-controls="notification-menu"
-                aria-haspopup="true"
-                variant="contained"
-                onClick={handleOpenMenu}
-              >
-                <Icon className={light ? "text-white" : "text-dark"}>notifications</Icon>
-              </IconButton>
               {renderMenu()}
             </SoftBox>
           </SoftBox>
