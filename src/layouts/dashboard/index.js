@@ -80,6 +80,8 @@ function Dashboard() {
   //mini 
   const [totalCost, setTotalCost] = useState(null);
   const [currentMonth, setCurrentMonth] = useState('');
+  const [lastMonthCost, setLastMonthCost] = useState(null);
+
 
   useEffect(() => {
     const fetchTotalCost = async () => {
@@ -103,6 +105,22 @@ function Dashboard() {
     fetchTotalCost();
   }, []);
 
+  useEffect(() => {
+    const fetchLastMonthCost = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/last_month_total_cost/?region=eu-west-1");
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        setLastMonthCost(data.total_cost);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchLastMonthCost();
+  }, []);
 
 
   return (
@@ -119,13 +137,14 @@ function Dashboard() {
                 icon={{ color: "info", component: "paid" }}
               />
             </Grid>
-            <Grid item xs={12} sm={6} xl={3}>
+            <Grid item xs={12} sm={6} >
               <MiniStatisticsCard
                 title={{ text: "Last Month Cost" }}
-                count="2,300"
-                percentage={{ color: "success", text: "+3%" }}
+                count={`$${lastMonthCost}`}
+                percentage={{ color: "success", text: "+3%" }} // You can adjust the percentage as needed
                 icon={{ color: "info", component: "public" }}
               />
+
             </Grid>
           </Grid>
         </SoftBox>

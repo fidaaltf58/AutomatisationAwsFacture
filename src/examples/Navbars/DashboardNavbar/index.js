@@ -11,6 +11,7 @@ import SoftTypography from "components/SoftTypography";
 import SoftInput from "components/SoftInput";
 
 import Breadcrumbs from "examples/Breadcrumbs";
+import Ver from"./VER.png";
 
 import {
   navbar,
@@ -130,7 +131,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
             </SoftBox>
             <SoftBox color={light ? "white" : "inherit"}>
               <Link to="/some-link">
-                <img src="src\examples\Navbars\DashboardNavbar\VER" style={{ height: '30px' }} />
+                <img src={Ver} alt="Ver" style={{ height: '30px' }} />
               </Link>
               {renderMenu()}
             </SoftBox>
