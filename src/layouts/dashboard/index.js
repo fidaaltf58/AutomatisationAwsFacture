@@ -1,42 +1,28 @@
-
-// @mui material components
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
-import Icon from "@mui/material/Icon";
-
-// Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
-import SoftTypography from "components/SoftTypography";
-
-// Soft UI Dashboard React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
-import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
-import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
-
-// Soft UI Dashboard React base styles
-import typography from "assets/theme/base/typography";
-
-// Dashboard layout components
+import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
 import BuildByDevelopers from "layouts/dashboard/components/BuildByDevelopers";
 import WorkWithTheRockets from "layouts/dashboard/components/WorkWithTheRockets";
-import Projects from "layouts/dashboard/components/Projects";
-import OrderOverview from "layouts/dashboard/components/OrderOverview";
-
-// Data
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData";
 import MixedChart from "examples/Charts/MixedChart";
-import React, { useEffect, useState } from "react";
+import typography from "assets/theme/base/typography";
+
 function Dashboard() {
   const { size } = typography;
-  const { chart, items } = reportsBarChartData;
 
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [],
   });
+
+  const [totalCost, setTotalCost] = useState(null);
+  const [currentMonth, setCurrentMonth] = useState('');
+  const [lastMonthCost, setLastMonthCost] = useState(null);
+  const [datachartData, setdataChartData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,12 +63,6 @@ function Dashboard() {
     fetchData();
   }, []); // Empty dependency array ensures useEffect runs only once on component mount
 
-  //mini 
-  const [totalCost, setTotalCost] = useState(null);
-  const [currentMonth, setCurrentMonth] = useState('');
-  const [lastMonthCost, setLastMonthCost] = useState(null);
-
-
   useEffect(() => {
     const fetchTotalCost = async () => {
       try {
@@ -122,6 +102,37 @@ function Dashboard() {
     fetchLastMonthCost();
   }, []);
 
+  useEffect(() => {
+    const fetchTotalCostCurrentWeek = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/evolution_total_cost_current_week/");
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+
+        // Transforming data for DefaultLineChart
+        const labels = Object.keys(data);
+        const transformedData = labels.map(label => ({ label, value: data[label] }));
+        setdataChartData(transformedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchTotalCostCurrentWeek();
+  }, []);
+
+  const defaultChartData = {
+    labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"],
+    datasets: [
+      {
+        label: "Total Costs",
+        data: [100, 150, 200, 180, 220, 250, 230],
+        color: "primary",
+      },
+    ],
+  };
 
   return (
     <DashboardLayout>
@@ -144,7 +155,6 @@ function Dashboard() {
                 percentage={{ color: "success", text: "+3%" }} // You can adjust the percentage as needed
                 icon={{ color: "info", component: "public" }}
               />
-
             </Grid>
           </Grid>
         </SoftBox>
@@ -163,41 +173,27 @@ function Dashboard() {
           </Grid>
         </SoftBox>
         <SoftBox mb={3}>
-          <Grid container spacing={3}>
+          
             <Grid item xs={12} lg={5}>
               <MixedChart
                 title="Total cost Over previous Months "
                 description="Comparison of sales and expenses over time"
-                height={300} // Adjust the height as needed
+                height={400} // Adjust the height as needed
                 chart={chartData}
               />
-            </Grid>
+          
 
             <Grid item xs={12} lg={7}>
-              <GradientLineChart
-                title="daily Cost "
-                description={
-                  <SoftBox display="flex" alignItems="center">
-                    <SoftBox fontSize={size.lg} color="success" mb={0.3} mr={0.5} lineHeight={0}>
-                      <Icon className="font-bold">arrow_upward</Icon>
-                    </SoftBox>
-                    <SoftTypography variant="button" color="text" fontWeight="medium">
-                      4% more{" "}
-                    </SoftTypography>
-                  </SoftBox>
-                }
-                height="20.25rem"
-                chart={gradientLineChartData}
-              />
+              
             </Grid>
           </Grid>
         </SoftBox>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={8}>
-            <Projects />
+
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
-            <OrderOverview />
+
           </Grid>
         </Grid>
       </SoftBox>

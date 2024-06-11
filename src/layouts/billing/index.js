@@ -9,6 +9,7 @@ import SoftButton from 'components/SoftButton';
 import Transaction from './components/Transaction';
 import WorkWithTheRockets from 'layouts/dashboard/components/WorkWithTheRockets';
 import { Card } from '@mui/material';
+import * as XLSX from 'xlsx'; 
 
 function Billing() {
   const [startDate, setStartDate] = useState('');
@@ -83,7 +84,7 @@ function Billing() {
           <Card>
 
             <SoftBox pt={2} px={2} display="flex" justifyContent="space-between" alignItems="center">
-              <SoftTypography variant="h4">Custom Your Billing Data Regroupement With Tags</SoftTypography>
+              <SoftTypography variant="h4">Tag-based Billing Analysis</SoftTypography>
               <SoftBox>
                 <SoftBox
                   sx={{
@@ -184,7 +185,7 @@ function Billing() {
                         <option key={tag} value={tag}>{tag}</option>
                       ))}
                     </select>
-                    <div style={{ display: 'flex', gap: '26px', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', gap: '26px', alignItems: 'center', marginBottom:"10px" }}>
                       <SoftButton onClick={handleFetchTables}>Click to Fetch Tables</SoftButton>
                     </div>
                     </div>
@@ -200,9 +201,6 @@ function Billing() {
           <SoftBox mb={3}>
                       <Card>
             <SoftBox pt={2} px={2} display="flex" justifyContent="space-between" alignItems="center">
-              <SoftTypography variant="h6" fontWeight="medium">
-                The Billing Data is going to be displayed Here !
-              </SoftTypography>
             </SoftBox>
             <SoftBox
               sx={{
@@ -223,7 +221,7 @@ function Billing() {
               <Grid container spacing={3}>
                 <Grid item xs={12} md={5}>
                   <SoftTypography variant="h6" fontWeight="medium">
-                    Data Billing table
+                   MONTHLY
                   </SoftTypography>
                   <div className="table-container-table1" style={{ maxHeight: "400px", overflowY: "scroll" }}>
                     <table style={{ borderCollapse: "collapse", width: "100%", border: "1px solid #e0e0e0" }}>
@@ -249,7 +247,7 @@ function Billing() {
                 </Grid>
                 <Grid item xs={12} md={7}>
                   <SoftTypography variant="h6" fontWeight="medium">
-                    Data Billing table
+                    DAILY
                   </SoftTypography>
                   <div className="table-container-table2" style={{ maxHeight: "400px", overflowY: "scroll" }}>
                     <table style={{ borderCollapse: "collapse", width: "100%", border: "1px solid #e0e0e0" }}>

@@ -1,19 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
 // @mui material components
@@ -24,16 +8,26 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
 // Soft UI Dashboard React examples
-
 import PageLayout from "examples/LayoutContainers/PageLayout";
 
 // Authentication layout components
 import Footer from "layouts/authentication/components/Footer";
 
+// Import the logo image
+import logo from "../../sign-in/VER.png";
+
 function CoverLayout({ color, header, title, description, image, top, children }) {
   return (
     <PageLayout background="white">
-    
+      <SoftBox
+        position="absolute"
+        top={16}
+        right={16}
+        component="img"
+        src={logo}
+        alt="logo"
+        width="100px"
+      />
       <Grid
         container
         justifyContent="center"
@@ -43,11 +37,14 @@ function CoverLayout({ color, header, title, description, image, top, children }
         }}
       >
         <Grid item xs={11} sm={8} md={5} xl={3}>
+       
           <SoftBox mt={top}>
+          <img src={logo} alt="vermeg"></img>
             <SoftBox pt={3} px={3}>
               {!header ? (
                 <>
                   <SoftBox mb={1}>
+                    
                     <SoftTypography variant="h3" fontWeight="bold" color={color} textGradient>
                       {title}
                     </SoftTypography>
@@ -63,7 +60,7 @@ function CoverLayout({ color, header, title, description, image, top, children }
             <SoftBox p={3}>{children}</SoftBox>
           </SoftBox>
         </Grid>
-        <Grid item xs={12} md={5}>
+        <Grid item xs={11} md={5}>
           <SoftBox
             height="100%"
             display={{ xs: "none", md: "block" }}
@@ -77,7 +74,7 @@ function CoverLayout({ color, header, title, description, image, top, children }
             }}
           >
             <SoftBox
-              ml={-8}
+              ml={-9}
               height="100%"
               sx={{
                 backgroundImage: `url(${image})`,

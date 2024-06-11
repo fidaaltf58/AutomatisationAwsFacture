@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 import colors from "assets/theme/base/colors";
 
-function Dashboard({ color, size }) {
+function Pencil({ color, size }) {
   return (
     <svg
       width={size}
@@ -11,25 +11,27 @@ function Dashboard({ color, size }) {
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      strokeWidth="0.5"
-     
+      fill="none"
+      stroke={colors[color] ? colors[color].main : colors.dark.main}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <title>dashboard</title>
-      
-      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-      <circle cx="12" cy="12" r="3"></circle>
+      <title>pencil</title>
+      <polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon>
+      <line x1="3" y1="22" x2="21" y2="22"></line>
     </svg>
   );
 }
 
-// Setting default values for the props of Dashboard
-Dashboard.defaultProps = {
-  color: "primary",
+// Setting default values for the props of Pencil
+Pencil.defaultProps = {
+  color: "dark",
   size: "16px",
 };
 
-// Typechecking props for the Dashboard
-Dashboard.propTypes = {
+// Typechecking props for the Pencil
+Pencil.propTypes = {
   color: PropTypes.oneOf([
     "primary",
     "secondary",
@@ -44,5 +46,4 @@ Dashboard.propTypes = {
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
-export default Dashboard;
-
+export default Pencil;

@@ -8,15 +8,15 @@ import SignIn from "layouts/authentication/sign-in";
 
 // Soft UI Dashboard React icons
 import Shop from "examples/Icons/Shop";
-import modify from "examples/Icons/modify"
 import Office from "examples/Icons/Office";
 import Document from "examples/Icons/Document";
 import SpaceShip from "examples/Icons/SpaceShip";
-import CustomerSupport from "examples/Icons/CustomerSupport";
 import CreditCard from "examples/Icons/CreditCard";
-import Schema from "layouts/schema"
+import Schema from "layouts/schema";
 import Cube from "examples/Icons/Cube";
-
+import Modify from"examples/Icons/modify";
+import Pencil from "examples/Icons/Pencil";
+import Signin from "examples/Icons/Signin";
 const routes = [
   {
     type: "collapse",
@@ -26,53 +26,58 @@ const routes = [
     icon: <Shop size="12px" />,
     component: <Dashboard />,
     noCollapse: true,
+    protected: true,
   },
 
   {
     type: "collapse",
-    name: "Tables",
-    key: "tables",
+    name: "Billing Overview",
+    key: "Billing Overview",
     route: "/tables",
     icon: <Office size="12px" />,
     component: <Tables />,
     noCollapse: true,
+    protected: true,
   },
   {
     type: "collapse",
-    name: "Billing",
-    key: "billing",
+    name: "Tagged Billing Data",
+    key: "Tagged Billing Data",
     route: "/billing",
-    icon: <CreditCard size="12px" />,
+    icon: <Cube size="12px" />,
     component: <Billing />,
     noCollapse: true,
+    protected: true,
   },
   {
     type: "collapse",
-    name: "Schema",
-    key: "Schema",
-    route: "/Schema",
-    icon: <Cube size="12px" />,
+    name: "Tag Value Adjustments",
+    key: "Tag Value Adjustments",
+    route: "/TagValueAdjustments",
+    icon: <Pencil size="12px" />,
     component: <Schema />,
     noCollapse: true,
+    protected: true,
   },
 
 
   { type: "title", title: "Account Pages", key: "account-pages" },
   {
     type: "collapse",
-    name: "Profile",
-    key: "profile",
-    route: "/profile",
-    icon: <CustomerSupport size="12px" />,
+    name: "History",
+    key: "History",
+    route: "/History",
+    icon: <Document size="12px" />,
     component: <Profile />,
     noCollapse: true,
+    protected: true,
   },
   {
     type: "collapse",
     name: "Sign In",
     key: "sign-in",
     route: "/authentication/sign-in",
-    icon: <Document size="12px" />,
+    icon: <Signin size="12px" />,
     component: <SignIn />,
     noCollapse: true,
   },
